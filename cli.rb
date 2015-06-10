@@ -1,4 +1,5 @@
 require_relative 'scrape.rb'
+require 'pry'
 
 def program_start
   puts "Welcome to Web0615"
@@ -14,7 +15,7 @@ def help_select
 end 
 
 def help_person
-  puts "You can view:\n'bio', 'education', 'work', favorite 'cities', 'blog', 'tagline', or go to their 'site', 'treehouse' profile, 'coderwall' profile, or 'codecademy' profile\nYou can select another student by going 'back'"
+  puts "You can view:\n'bio', 'education', go to their 'url', work', favorite 'cities', 'blog', 'tagline', 'treehouse' profile, 'coderwall' profile, or 'codecademy' profile\nYou can select another student by going 'back'"
 end
 
 def main_level
@@ -39,8 +40,8 @@ def main_level
 end 
 
 def select_level
-  puts help_select
-  print "Input: "
+  help_select
+  print "Input (select person): "
   input = gets.strip.downcase
   while (input != 'exit') && (input != 'back')
     case input.to_i 
@@ -60,7 +61,7 @@ def select_level
       else
         puts "Please enter a valid command"
       end 
-    print "Input: "
+    print "Input (select person): "
     input = gets.strip.downcase
   end 
   if input == 'exit'
@@ -72,15 +73,30 @@ def person_info(person)
   options = Person.get_options
   puts "You have selected #{person.name}."
   help_person
-  print "Input: "
+  print "Input (info command): "
   input = gets.strip.downcase
   while (input != 'exit') && (input != 'back')
     if options.include?(input)
-      puts person.send(input)
+
+      output = person.send(input)
+      #binding.pry
+      if output!="unlisted" && output != ""
+
+        puts person.send(input)
+
+        if input=="url"
+
+          system("open http://web0615.students.flatironschool.com/#{person.url}")
+        end
+
+      else
+        puts "Sorry, that information was not provided."
+      end
+        
     else
       puts "Please enter a valid item"
     end 
-    print "Input: "
+    print "Input (info command): "
     input = gets.strip.downcase
   end
   if input == 'exit'
