@@ -38,8 +38,11 @@ def scrape
     else 
       blog = "unlisted"
     end
-    cities = info[18].css("p a").text
-    
+    cities = info[18].css("p").text.strip.split("\n")
+    #puts cities
+    cities.each do |x|
+      x.gsub!("                      ", "")
+    end
     puts cities.inspect
   end
 end
