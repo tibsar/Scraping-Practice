@@ -15,7 +15,7 @@ def help_select
 end 
 
 def help_person
-  puts "You can view:\n'bio', 'education', go to their 'url', work', favorite 'cities', 'blog', 'tagline', 'treehouse' profile, 'coderwall' profile, or 'codecademy' profile\nYou can select another student by going 'back'"
+  puts "You can view:\n'bio', 'education', go to their 'url', 'work', favorite 'cities', 'blog', 'tagline', 'treehouse' profile, 'coderwall' profile, or 'codecademy' profile\nYou can select another student by going 'back'"
 end
 
 def main_level
