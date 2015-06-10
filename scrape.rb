@@ -1,7 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 require 'pry'
-
+require_relative 'person.rb'
 
 def scrape
   html = open("http://web0615.students.flatironschool.com/").read
@@ -43,8 +43,8 @@ def scrape
     cities.each do |x|
       x.gsub!("                      ", "")
     end
-    puts cities.inspect
+    Person.new(name, url, tagline, bio, education, work, codeschool, treehouse, codecademy, coderwall, blog, cities)
   end
+
 end
 
-scrape
