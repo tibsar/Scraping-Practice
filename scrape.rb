@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
+require 'pry'
 
 
 def scrape
@@ -14,9 +15,32 @@ def scrape
     html_student = open("http://web0615.students.flatironschool.com/#{url}")
     student_page = Nokogiri::HTML(html_student)
     tagline = student_page.css("div.textwidget h3").text
-    bio = student_page.css("div#scroll-about div#equalize:first div#ok-text-column-2 div.services p").text
-    puts bio
-
+    info = student_page.css("div.ok-text-column div")
+    #binding.pry
+    bio = info[0].css("p").text.strip
+    education = info[3].css("li").text.strip
+    work = info[6].css("p").text.strip.gsub("\n", "").gsub("\t", "").gsub("     ", "")
+    
+    account = []   
+    for i in 0..3 
+      if info[9].css("p a")[i]!= nil
+        account[i] = info[9].css("p a")[i].attr("href")
+      else
+        account[i] = "unlisted"
+      end
+    end
+    codeschool = account[0]
+    treehouse  = account[1]
+    codecademy = account[2]
+    coderwall = account[3]
+    if info[12].css("p a").attr("href").to_s.length != 1
+      blog = info[12].css("p a").attr("href")
+    else 
+      blog = "unlisted"
+    end
+    cities = info[18].css("p a").text
+    
+    puts cities.inspect
   end
 end
 
